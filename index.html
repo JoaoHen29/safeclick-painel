@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SafeClick · Painel de Cursos</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<link href="css/style.css" rel="stylesheet">
+</head>
+<body data-bs-spy="scroll" data-bs-target="#mainNav" data-bs-offset="90" tabindex="0">
+
+<!-- ===== NAVBAR ===== -->
+<nav class="navbar navbar-expand-md fixed-top navbar-dark" id="mainNav">
+  <div class="container">
+    <a class="navbar-brand" href="#inicio">
+      <i class="bi bi-shield-lock-fill"></i> SafeClick
+      <span class="brand-sub">painel</span>
+    </a>
+
+    <button class="btn btn-icon d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasMenu" aria-controls="offcanvasMenu" aria-label="Abrir menu">
+      <i class="bi bi-list"></i>
+    </button>
+
+    <ul class="navbar-nav flex-row gap-1 d-none d-md-flex ms-auto">
+      <li class="nav-item"><a class="nav-link" href="#inicio">Início</a></li>
+      <li class="nav-item"><a class="nav-link" href="#progresso">Progresso</a></li>
+      <li class="nav-item"><a class="nav-link" href="#cursos">Cursos</a></li>
+      <li class="nav-item"><a class="nav-link" href="#sobre">Sobre</a></li>
+    </ul>
+    <button class="btn btn-brand ms-md-3 d-none d-md-inline-flex" type="button" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+      <i class="bi bi-plus-lg"></i> Adicionar curso
+    </button>
+  </div>
+</nav>
+
+<!-- ===== OFFCANVAS MENU ===== -->
+<div class="offcanvas offcanvas-start text-bg-dark" tabindex="-1" id="offcanvasMenu" aria-labelledby="offcanvasMenuLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasMenuLabel"><i class="bi bi-shield-lock-fill"></i> SafeClick</h5>
+    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+  </div>
+  <div class="offcanvas-body d-flex flex-column">
+    <ul class="nav nav-pills flex-column mb-4">
+      <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" href="#inicio"><i class="bi bi-house-door"></i> Início</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" href="#progresso"><i class="bi bi-graph-up"></i> Progresso</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" href="#cursos"><i class="bi bi-journal-bookmark"></i> Cursos</a></li>
+      <li class="nav-item"><a class="nav-link" data-bs-dismiss="offcanvas" href="#sobre"><i class="bi bi-info-circle"></i> Sobre</a></li>
+    </ul>
+
+    <p class="text-muted small text-uppercase-off mb-2">Atalhos por categoria</p>
+    <div class="d-flex flex-wrap gap-2 mb-4" id="offcanvasCategoryShortcuts"></div>
+
+    <button class="btn btn-brand mt-auto" type="button" data-bs-dismiss="offcanvas" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+      <i class="bi bi-plus-lg"></i> Adicionar curso
+    </button>
+  </div>
+</div>
+
+<!-- placeholder de alerts contextuais -->
+<div id="alertPlaceholder" class="alert-stack"></div>
+
+<main>
+
+<!-- ===== HERO / INÍCIO ===== -->
+<section id="inicio" class="hero">
+  <div class="container">
+    <div class="row align-items-center g-5">
+      <div class="col-lg-5">
+        <p class="eyebrow">Painel de administração</p>
+        <h1>Aprenda antes<br>de clicar.</h1>
+        <p class="lead-text">
+          Organize as trilhas de conscientização em segurança digital da sua comunidade:
+          cadastre cursos, acompanhe a meta de conteúdos publicados e destaque o que for
+          mais urgente para quem está começando.
+        </p>
+        <div class="d-flex flex-wrap gap-2">
+          <button class="btn btn-brand btn-lg" type="button" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+            <i class="bi bi-plus-lg"></i> Cadastrar novo curso
+          </button>
+          <a href="#cursos" class="btn btn-outline-light btn-lg">Ver cursos</a>
+        </div>
+      </div>
+
+      <div class="col-lg-7">
+        <div id="destaqueCarousel" class="carousel slide destaque-carousel" data-bs-ride="carousel">
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#destaqueCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#destaqueCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#destaqueCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+          </div>
+          <div class="carousel-inner" id="carouselInner">
+            <!-- slides injetados via js/app.js -->
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#destaqueCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#destaqueCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PROGRESSO ===== -->
+<section id="progresso" class="stats-band">
+  <div class="container">
+    <div class="row gy-4 align-items-center">
+      <div class="col-md-3 col-6 stat">
+        <span class="stat-num" id="statTotal">0</span>
+        <span class="stat-label">cursos cadastrados</span>
+      </div>
+      <div class="col-md-3 col-6 stat">
+        <span class="stat-num" id="statCategorias">0</span>
+        <span class="stat-label">categorias ativas</span>
+      </div>
+      <div class="col-md-3 col-6 stat">
+        <span class="stat-num" id="statCertificados">0</span>
+        <span class="stat-label">emitem certificado</span>
+      </div>
+      <div class="col-md-3 col-6">
+        <div class="d-flex justify-content-between small mb-1">
+          <span>Meta do trimestre</span>
+          <span id="progressLabel">0 / 0</span>
+        </div>
+        <div class="progress" role="progressbar" aria-label="Progresso da meta de cursos" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="height:10px">
+          <div class="progress-bar" id="cadastroProgress" style="width:0%"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CURSOS ===== -->
+<section id="cursos" class="courses-section">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-end gap-3 mb-4">
+      <div>
+        <p class="eyebrow">Biblioteca</p>
+        <h2>Cursos cadastrados</h2>
+      </div>
+
+      <div class="d-flex flex-wrap gap-2">
+        <div class="dropdown">
+          <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="categoryDropdownBtn">
+            <i class="bi bi-funnel"></i> Todas as categorias
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" id="categoryDropdownMenu"></ul>
+        </div>
+        <button class="btn btn-brand" type="button" data-bs-toggle="modal" data-bs-target="#addCourseModal">
+          <i class="bi bi-plus-lg"></i> Adicionar curso
+        </button>
+      </div>
+    </div>
+
+    <!-- spinner de carregamento inicial -->
+    <div id="loadingSpinner" class="text-center py-5">
+      <div class="spinner-border" role="status" style="color:var(--brand)">
+        <span class="visually-hidden">Carregando cursos...</span>
+      </div>
+      <p class="text-muted small mt-3 mb-0">Carregando cursos cadastrados...</p>
+    </div>
+
+    <div class="alert alert-warning d-none" id="emptyAlert" role="alert">
+      Nenhum curso encontrado para esta categoria.
+    </div>
+
+    <div class="row g-4 d-none" id="coursesGrid"></div>
+
+    <nav class="mt-5 d-flex justify-content-center" aria-label="Paginação de cursos">
+      <ul class="pagination" id="pagination"></ul>
+    </nav>
+  </div>
+</section>
+
+<!-- ===== SOBRE ===== -->
+<section id="sobre" class="about-section">
+  <div class="container">
+    <div class="row g-5">
+      <div class="col-lg-5">
+        <p class="eyebrow">Sobre o painel</p>
+        <h2>Como o SafeClick organiza o conteúdo</h2>
+        <p class="lead-text">
+          Cada curso cadastrado aqui alimenta a plataforma de aprendizagem usada pelos
+          participantes, incluindo os quizzes e a verificação de senha vazada. O painel
+          existe para manter a trilha educativa sempre atualizada.
+        </p>
+      </div>
+      <div class="col-lg-7">
+        <div class="row g-4">
+          <div class="col-sm-6">
+            <div class="about-item">
+              <i class="bi bi-pencil-square"></i>
+              <h3>Cadastro rápido</h3>
+              <p>Preencha título, carga horária e categoria em um formulário validado antes de publicar.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="about-item">
+              <i class="bi bi-funnel"></i>
+              <h3>Filtro por categoria
+                <i class="bi bi-question-circle about-info" tabindex="0" data-bs-toggle="popover" data-bs-trigger="focus"
+                   data-bs-content="Use o filtro na seção Cursos para revisar rapidamente uma trilha específica, como Phishing ou Senhas."></i>
+              </h3>
+              <p>Organize a biblioteca por tema para facilitar a curadoria do conteúdo.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="about-item">
+              <i class="bi bi-patch-check"></i>
+              <h3>Certificação</h3>
+              <p>Marque quais cursos emitem certificado ao final da trilha de estudos.</p>
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="about-item">
+              <i class="bi bi-star"></i>
+              <h3>Destaques da home</h3>
+              <p>Cursos marcados como destaque aparecem no carrossel visto por todos os usuários.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="container d-flex flex-wrap justify-content-between gap-2">
+    <span><i class="bi bi-shield-lock-fill"></i> SafeClick — Aprenda antes de clicar</span>
+    <span class="text-muted">Painel administrativo · exercício de Bootstrap</span>
+  </div>
+</footer>
+
+<!-- ===== MODAL: ADICIONAR CURSO ===== -->
+<div class="modal fade" id="addCourseModal" tabindex="-1" aria-labelledby="addCourseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="addCourseModalLabel"><i class="bi bi-plus-lg"></i> Adicionar curso</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+
+      <form id="courseForm" class="needs-validation" novalidate>
+        <div class="modal-body">
+
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="courseTitulo" placeholder="Título do curso" minlength="5" required>
+            <label for="courseTitulo">Título do curso</label>
+            <div class="invalid-feedback">Informe um título com pelo menos 5 caracteres.</div>
+          </div>
+
+          <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+              <div class="form-floating">
+                <select class="form-select" id="courseCategoria" required>
+                  <option value="" selected disabled>Selecione...</option>
+                  <option>Phishing</option>
+                  <option>Senhas</option>
+                  <option>Engenharia Social</option>
+                  <option>Privacidade</option>
+                  <option>Redes</option>
+                  <option>Golpes</option>
+                  <option>Boas Práticas</option>
+                </select>
+                <label for="courseCategoria">Categoria</label>
+                <div class="invalid-feedback">Selecione uma categoria.</div>
+              </div>
+            </div>
+
+            <div class="col-sm-6">
+              <label for="courseCarga" class="form-label small text-muted mb-1">
+                Carga horária
+                <i class="bi bi-question-circle about-info" tabindex="0" data-bs-toggle="popover" data-bs-trigger="hover focus"
+                   data-bs-content="Informe a duração total do curso em horas, por exemplo 3."></i>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-clock"></i></span>
+                <input type="number" class="form-control" id="courseCarga" min="1" max="200" value="2" required>
+                <span class="input-group-text">horas</span>
+                <div class="invalid-feedback">Informe um valor entre 1 e 200 horas.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-floating mb-3">
+            <textarea class="form-control" id="courseDescricao" placeholder="Descrição" style="height:100px" minlength="20" required></textarea>
+            <label for="courseDescricao">Descrição do curso</label>
+            <div class="invalid-feedback">Descreva o curso com pelo menos 20 caracteres.</div>
+          </div>
+
+          <div class="mb-4">
+            <label for="courseNivel" class="form-label small text-muted mb-1">Nível de dificuldade</label>
+            <input type="range" class="form-range" id="courseNivel" min="1" max="5" step="1" value="2">
+            <div class="text-center small fw-semibold" id="courseNivelLabel" style="color:var(--brand)">Iniciante</div>
+          </div>
+
+          <div class="d-flex flex-wrap gap-4">
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="courseCertificado" checked>
+              <label class="form-check-label" for="courseCertificado">Emitir certificado ao concluir</label>
+            </div>
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="courseDestaque">
+              <label class="form-check-label" for="courseDestaque">Destacar na página inicial</label>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancelar</button>
+          <button type="submit" class="btn btn-brand" id="submitCourseBtn">
+            <span class="btn-label"><i class="bi bi-check-lg"></i> Salvar curso</span>
+          </button>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===== TOASTS ===== -->
+<div class="toast-container position-fixed bottom-0 end-0 p-3" id="toastContainer" style="z-index:1080"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
